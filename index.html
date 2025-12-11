@@ -29,7 +29,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class', // Manual toggle only, keeping Light mode primary
+            darkMode: 'class', 
             theme: {
                 extend: {
                     fontFamily: {
@@ -39,33 +39,44 @@
                     },
                     colors: {
                         dusty: {
-                            50: '#fdf8f9',  // Warmer white
+                            50: '#fdf8f9',  
                             100: '#fbeef1',
                             200: '#f5dce3',
                             300: '#ebc0cb',
                             400: '#de9cae',
-                            500: '#b3697a', // Main Brand Color
+                            500: '#b3697a', 
                             600: '#9e5264',
                             700: '#854050',
                             800: '#6f3743',
                             900: '#5e313c',
                         },
-                        gold: {
-                            400: '#deb887',
+                        // Deep luxurious darks for dark mode if needed
+                        luxury: {
+                            800: '#2a2426', 
+                            900: '#1c1718', 
+                            950: '#100c0d', 
                         }
                     },
                     backgroundImage: {
                         'paper': "url('https://www.transparenttextures.com/patterns/cream-paper.png')",
                     },
                     animation: {
+                        'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                         'float': 'float 6s ease-in-out infinite',
-                        'blob': 'blob 7s infinite',
+                        'blob': 'blob 10s infinite',
                         'wiggle': 'wiggle 1s ease-in-out infinite',
+                        'spin-slow': 'spin 8s linear infinite',
+                        'ken-burns': 'kenBurns 20s ease-out infinite alternate',
+                        'shimmer': 'shimmer 2.5s infinite',
                     },
                     keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(40px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
+                            '50%': { transform: 'translateY(-15px)' },
                         },
                         blob: {
                             '0%': { transform: 'translate(0px, 0px) scale(1)' },
@@ -76,6 +87,13 @@
                         wiggle: {
                             '0%, 100%': { transform: 'rotate(-3deg)' },
                             '50%': { transform: 'rotate(3deg)' },
+                        },
+                        kenBurns: {
+                            '0%': { transform: 'scale(1)' },
+                            '100%': { transform: 'scale(1.15)' },
+                        },
+                        shimmer: {
+                            '100%': { transform: 'translateX(100%)' },
                         }
                     }
                 }
@@ -89,43 +107,84 @@
         
         /* Modern Floating Glass Navbar */
         .glass-nav {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
         }
 
         /* Fun, Playful Card Styles */
         .fun-card {
-            background: linear-gradient(145deg, #ffffff, #fff5f7);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy transition */
+            background: linear-gradient(145deg, #ffffff, #fff0f3);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy spring effect */
         }
         
         .fun-card:hover {
-            transform: translateY(-10px) rotate(1deg);
-            box-shadow: 0 20px 40px -5px rgba(179, 105, 122, 0.2);
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(179, 105, 122, 0.25); /* Dusty Pink Glow */
             border-color: #fce7ef;
         }
 
         /* Image Overlay Gradient */
         .img-overlay {
-            background: linear-gradient(to top, rgba(94, 49, 60, 0.85) 0%, rgba(94, 49, 60, 0.1) 60%, transparent 100%);
+            background: linear-gradient(to top, rgba(94, 49, 60, 0.9) 0%, rgba(94, 49, 60, 0.2) 60%, transparent 100%);
         }
 
+        /* Grainy Noise Texture - Adds "Paper/Film" Look */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Reveal Animation Classes */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
+            transform: translateY(40px) scale(0.95);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .reveal.active {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
+        }
+
+        /* Shimmer Effect for Buttons */
+        .btn-shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-shimmer::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: translateX(-100%);
+        }
+        .btn-shimmer:hover::after {
+            animation: shimmer 1.5s infinite;
+        }
+
+        /* Text Balance Utility */
+        .text-balance {
+            text-wrap: balance;
         }
     </style>
 </head>
 <body class="bg-dusty-50 text-dusty-900 antialiased selection:bg-dusty-200 selection:text-dusty-900 bg-paper">
+
+    <!-- Noise Texture Overlay -->
+    <div class="noise-overlay"></div>
 
     <!-- Modern Floating Navbar -->
     <nav class="fixed w-full z-50 top-0 pt-4 px-4 transition-all duration-300">
@@ -134,11 +193,11 @@
                 
                 <!-- Logo -->
                 <div class="flex items-center gap-3 cursor-pointer group">
-                    <div class="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-dusty-100 to-white rounded-full shadow-inner text-dusty-500 group-hover:rotate-12 transition-transform duration-300">
+                    <div class="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-dusty-100 to-white rounded-full shadow-inner text-dusty-500 group-hover:rotate-12 transition-transform duration-500">
                         <i data-lucide="flower-2" class="w-6 h-6"></i>
                     </div>
                     <div class="flex flex-col">
-                        <span class="font-script text-3xl text-dusty-900 dark:text-white leading-none mt-1">Magic Flowers</span>
+                        <span class="font-script text-3xl text-dusty-900 dark:text-white leading-none mt-1 group-hover:text-dusty-600 transition-colors">Magic Flowers</span>
                     </div>
                 </div>
 
@@ -146,25 +205,25 @@
                 <div class="hidden md:flex items-center gap-8">
                     <a href="#home" class="text-sm font-bold text-dusty-700 dark:text-dusty-100 hover:text-dusty-500 dark:hover:text-white transition relative group">
                         الرئيسية
-                        <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-dusty-400 transition-all group-hover:w-full"></span>
+                        <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-dusty-400 transition-all duration-300 group-hover:w-full"></span>
                     </a>
                     <a href="#services" class="text-sm font-bold text-dusty-700 dark:text-dusty-100 hover:text-dusty-500 dark:hover:text-white transition relative group">
                         خدماتنا
-                        <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-dusty-400 transition-all group-hover:w-full"></span>
+                        <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-dusty-400 transition-all duration-300 group-hover:w-full"></span>
                     </a>
                     <a href="#collection" class="text-sm font-bold text-dusty-700 dark:text-dusty-100 hover:text-dusty-500 dark:hover:text-white transition relative group">
                         المجموعات
-                        <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-dusty-400 transition-all group-hover:w-full"></span>
+                        <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-dusty-400 transition-all duration-300 group-hover:w-full"></span>
                     </a>
                     <a href="#contact" class="text-sm font-bold text-dusty-700 dark:text-dusty-100 hover:text-dusty-500 dark:hover:text-white transition relative group">
                         الموقع
-                        <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-dusty-400 transition-all group-hover:w-full"></span>
+                        <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-dusty-400 transition-all duration-300 group-hover:w-full"></span>
                     </a>
                 </div>
 
                 <!-- CTA Button -->
                 <div class="flex items-center gap-4">
-                    <a href="https://wa.me/201099760278" target="_blank" class="hidden md:flex items-center gap-2 bg-dusty-500 text-white px-6 py-2.5 rounded-full font-bold hover:bg-dusty-600 transition-all shadow-lg hover:shadow-dusty-300/50 transform hover:scale-105 active:scale-95">
+                    <a href="https://wa.me/201099760278" target="_blank" class="hidden md:flex items-center gap-2 bg-dusty-500 text-white px-6 py-2.5 rounded-full font-bold hover:bg-dusty-600 transition-all shadow-lg hover:shadow-dusty-300/50 transform hover:scale-105 active:scale-95 btn-shimmer">
                         <span>تواصل معنا</span>
                         <i data-lucide="message-circle" class="w-4 h-4"></i>
                     </a>
@@ -186,53 +245,61 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Parallax/Ken Burns Effect -->
     <header id="home" class="relative h-screen min-h-[650px] flex items-center justify-center overflow-hidden">
-        <!-- Background Image -->
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1457089328109-e5d9bd499191?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover" alt="Calm Dusty Pink Flowers">
+        <!-- Background Image Container -->
+        <div class="absolute inset-0 z-0 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1457089328109-e5d9bd499191?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover animate-ken-burns origin-center" alt="Calm Dusty Pink Flowers">
             <!-- Stronger Overlay for Visibility -->
-            <div class="absolute inset-0 bg-stone-900/60 mix-blend-multiply"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-dusty-50 via-transparent to-black/40"></div>
+            <div class="absolute inset-0 bg-stone-900/50 mix-blend-multiply"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-dusty-50 via-transparent to-black/30"></div>
         </div>
 
         <!-- Floating Decorative Blobs -->
-        <div class="absolute top-1/4 left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl animate-blob"></div>
-        <div class="absolute bottom-1/4 right-10 w-40 h-40 bg-dusty-300/20 rounded-full blur-2xl animate-blob animation-delay-2000"></div>
+        <div class="absolute top-1/4 left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl animate-blob opacity-60"></div>
+        <div class="absolute bottom-1/4 right-10 w-40 h-40 bg-dusty-300/20 rounded-full blur-2xl animate-blob animation-delay-2000 opacity-60"></div>
 
         <div class="relative z-10 container mx-auto px-6 text-center pt-20">
-            <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-6 py-2 rounded-full border border-white/40 shadow-lg mb-8 animate-fade-in hover:bg-white/30 transition cursor-default">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-6 py-2 rounded-full border border-white/40 shadow-lg mb-8 animate-fade-in-up hover:bg-white/30 transition cursor-default">
                 <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
                 <span class="text-xs font-bold text-white tracking-widest uppercase shadow-sm">مفتوح 24 ساعة - برج العرب</span>
             </div>
 
             <!-- Solid White Title with Strong Shadow -->
-            <h1 class="text-7xl md:text-9xl mb-6 font-script animate-fade-in text-white drop-shadow-2xl" style="animation-delay: 0.2s; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+            <h1 class="text-7xl md:text-9xl mb-6 font-script animate-fade-in-up text-white drop-shadow-2xl" style="animation-delay: 0.1s; text-shadow: 0 4px 30px rgba(0,0,0,0.5);">
                 Magic Flowers
             </h1>
             
             <!-- Balanced Slogan with Glass Backdrop -->
-            <div class="inline-block relative group animate-fade-in w-full max-w-4xl mx-auto mb-12 px-2" style="animation-delay: 0.4s;">
-                <div class="absolute -inset-4 bg-black/30 backdrop-blur-sm rounded-3xl opacity-100 shadow-xl"></div>
-                <p class="relative text-lg md:text-2xl text-white font-serif italic leading-relaxed font-medium drop-shadow-lg text-balance py-2" style="text-wrap: balance;">
+            <div class="inline-block relative group animate-fade-in-up w-full max-w-4xl mx-auto mb-12 px-2" style="animation-delay: 0.2s;">
+                <div class="absolute -inset-4 bg-black/20 backdrop-blur-sm rounded-3xl opacity-100 shadow-xl transition-all duration-500 group-hover:bg-black/30"></div>
+                <p class="relative text-lg md:text-2xl text-white font-serif italic leading-relaxed font-medium drop-shadow-lg text-balance py-2">
                     "حيث تلتقي الأناقة بالبساطة. نصنع من الزهور ذكريات هادئة لا تُنسى."
                 </p>
             </div>
 
-            <div class="flex flex-col sm:flex-row gap-5 justify-center items-center animate-fade-in mt-4" style="animation-delay: 0.6s;">
-                <a href="#collection" class="group px-10 py-4 bg-white/10 backdrop-blur-md text-white rounded-full font-bold shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] hover:bg-white hover:text-dusty-900 transition-all border-2 border-white/50 hover:scale-105">
+            <div class="flex flex-col sm:flex-row gap-5 justify-center items-center animate-fade-in-up mt-4" style="animation-delay: 0.3s;">
+                <a href="#collection" class="group px-10 py-4 bg-white/10 backdrop-blur-md text-white rounded-full font-bold shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] hover:bg-white hover:text-dusty-900 transition-all border-2 border-white/50 hover:scale-105 btn-shimmer">
                     <span class="flex items-center gap-2">
                         تصفح المجموعات
                         <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
                     </span>
                 </a>
                 
-                <!-- High Contrast WhatsApp Button: Solid Dusty Pink -->
-                <a href="https://wa.me/201099760278" class="px-10 py-4 bg-dusty-500 text-white border-2 border-dusty-500 rounded-full font-bold shadow-lg hover:bg-dusty-600 hover:border-dusty-600 transition-all hover:scale-105 flex items-center gap-2 group">
+                <!-- High Contrast WhatsApp Button -->
+                <a href="https://wa.me/201099760278" class="px-10 py-4 bg-dusty-500 text-white border-2 border-dusty-500 rounded-full font-bold shadow-lg hover:bg-dusty-600 hover:border-dusty-600 transition-all hover:scale-105 flex items-center gap-2 group btn-shimmer">
                     <span>اطلب عبر واتساب</span>
                     <i data-lucide="message-circle" class="w-4 h-4 text-white/90 group-hover:rotate-12 transition-transform"></i>
                 </a>
             </div>
+        </div>
+        
+        <!-- Bottom Wave Divider -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none transform rotate-180">
+            <svg class="relative block w-[calc(100%+1.3px)] h-[50px] text-dusty-50" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="currentColor"></path>
+            </svg>
         </div>
     </header>
 
@@ -252,7 +319,7 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Service 1 -->
                 <div class="fun-card rounded-[2rem] p-8 text-center reveal relative overflow-hidden group">
-                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-dusty-100 rounded-full blur-xl group-hover:bg-dusty-200 transition-colors"></div>
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-dusty-100 rounded-full blur-xl group-hover:bg-dusty-200 transition-colors duration-500"></div>
                     <div class="relative z-10">
                         <div class="w-18 h-18 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 text-dusty-500 shadow-md group-hover:scale-110 group-hover:rotate-3 transition duration-500 border border-dusty-50">
                             <i data-lucide="trees" class="w-8 h-8"></i>
@@ -264,7 +331,7 @@
 
                 <!-- Service 2 -->
                 <div class="fun-card rounded-[2rem] p-8 text-center reveal relative overflow-hidden group" style="transition-delay: 100ms;">
-                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-dusty-100 rounded-full blur-xl group-hover:bg-dusty-200 transition-colors"></div>
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-dusty-100 rounded-full blur-xl group-hover:bg-dusty-200 transition-colors duration-500"></div>
                     <div class="relative z-10">
                         <div class="w-18 h-18 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 text-dusty-500 shadow-md group-hover:scale-110 group-hover:-rotate-3 transition duration-500 border border-dusty-50">
                             <i data-lucide="car" class="w-8 h-8"></i>
@@ -276,7 +343,7 @@
 
                 <!-- Service 3 -->
                 <div class="fun-card rounded-[2rem] p-8 text-center reveal relative overflow-hidden group" style="transition-delay: 200ms;">
-                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-dusty-100 rounded-full blur-xl group-hover:bg-dusty-200 transition-colors"></div>
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-dusty-100 rounded-full blur-xl group-hover:bg-dusty-200 transition-colors duration-500"></div>
                     <div class="relative z-10">
                         <div class="w-18 h-18 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 text-dusty-500 shadow-md group-hover:scale-110 group-hover:rotate-3 transition duration-500 border border-dusty-50">
                             <i data-lucide="flower" class="w-8 h-8"></i>
@@ -288,7 +355,7 @@
 
                 <!-- Service 4 -->
                 <div class="fun-card rounded-[2rem] p-8 text-center reveal relative overflow-hidden group" style="transition-delay: 300ms;">
-                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-dusty-100 rounded-full blur-xl group-hover:bg-dusty-200 transition-colors"></div>
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-dusty-100 rounded-full blur-xl group-hover:bg-dusty-200 transition-colors duration-500"></div>
                     <div class="relative z-10">
                         <div class="w-18 h-18 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 text-dusty-500 shadow-md group-hover:scale-110 group-hover:-rotate-3 transition duration-500 border border-dusty-50">
                             <i data-lucide="gift" class="w-8 h-8"></i>
@@ -298,6 +365,13 @@
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <!-- Bottom Curve Divider -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+            <svg class="relative block w-[calc(100%+1.3px)] h-[60px] text-white" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" fill="currentColor"></path>
+            </svg>
         </div>
     </section>
 
@@ -358,6 +432,13 @@
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <!-- Bottom Wave Divider -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none transform rotate-180">
+            <svg class="relative block w-[calc(100%+1.3px)] h-[50px] text-dusty-50/50" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="currentColor"></path>
+            </svg>
         </div>
     </section>
 
@@ -442,7 +523,14 @@
 
     <!-- Location Section -->
     <section id="contact" class="py-24 bg-white relative">
-        <div class="container mx-auto px-6">
+        <!-- Top Wave Divider -->
+        <div class="absolute top-0 left-0 w-full overflow-hidden leading-none">
+            <svg class="relative block w-[calc(100%+1.3px)] h-[50px] text-dusty-50/50" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="currentColor"></path>
+            </svg>
+        </div>
+
+        <div class="container mx-auto px-6 mt-10">
             <div class="bg-dusty-50 rounded-[3rem] shadow-lg shadow-dusty-100/50 border border-dusty-100 overflow-hidden">
                 <div class="grid lg:grid-cols-2">
                     <!-- Text Side -->
@@ -479,7 +567,7 @@
                         </div>
 
                         <div class="mt-12">
-                            <a href="https://maps.app.goo.gl/9UbMaTZmkQbNMPop6" target="_blank" class="inline-flex items-center justify-center w-full bg-stone-900 text-white py-4 rounded-xl font-bold hover:bg-stone-800 transition gap-3 shadow-lg hover:-translate-y-1">
+                            <a href="https://maps.app.goo.gl/9UbMaTZmkQbNMPop6" target="_blank" class="inline-flex items-center justify-center w-full bg-stone-900 text-white py-4 rounded-xl font-bold hover:bg-stone-800 transition gap-3 shadow-lg hover:-translate-y-1 btn-shimmer">
                                 <i data-lucide="navigation" class="w-5 h-5"></i>
                                 الموقع على الخريطة
                             </a>
