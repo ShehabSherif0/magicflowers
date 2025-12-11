@@ -19,7 +19,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Alex+Brush&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Alex+Brush&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -29,8 +29,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            // Disabled dark mode 'media' strategy to keep it Light & Airy
-            darkMode: 'class', 
+            darkMode: 'class', // Manual toggle only, keeping Light mode primary
             theme: {
                 extend: {
                     fontFamily: {
@@ -39,39 +38,44 @@
                         script: ['Alex Brush', 'cursive'],
                     },
                     colors: {
-                        // TRUE Dusty Pink / Muted Mauve Palette
                         dusty: {
-                            50: '#faf7f8',  // Off-white pink
-                            100: '#f4e9ec', // Very pale grey-pink
-                            200: '#ebd5db', // Muted pink
-                            300: '#dfbbc5', // Dusty Rose
-                            400: '#c892a0', // Mauve
-                            500: '#b3697a', // Main Dusty Accent (Calm)
-                            600: '#965261', // Darker Mauve
-                            700: '#7a414e',
-                            800: '#63353f', // Brownish
-                            900: '#522e36', // Dark Brown text
+                            50: '#fdf8f9',  // Warmer white
+                            100: '#fbeef1',
+                            200: '#f5dce3',
+                            300: '#ebc0cb',
+                            400: '#de9cae',
+                            500: '#b3697a', // Main Brand Color
+                            600: '#9e5264',
+                            700: '#854050',
+                            800: '#6f3743',
+                            900: '#5e313c',
                         },
-                        stone: {
-                            850: '#2d2a2a',
-                            900: '#1c1917',
+                        gold: {
+                            400: '#deb887',
                         }
                     },
                     backgroundImage: {
                         'paper': "url('https://www.transparenttextures.com/patterns/cream-paper.png')",
                     },
                     animation: {
-                        'fade-in': 'fadeIn 1.5s ease-out forwards',
                         'float': 'float 6s ease-in-out infinite',
+                        'blob': 'blob 7s infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
                     },
                     keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(10px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-10px)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
                         }
                     }
                 }
@@ -83,29 +87,37 @@
         html { scroll-behavior: smooth; }
         body { overflow-x: hidden; }
         
-        /* Elegant, Calm Glass Effect */
+        /* Modern Floating Glass Navbar */
         .glass-nav {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(179, 105, 122, 0.05);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 10px 30px -10px rgba(179, 105, 122, 0.1);
+        /* Fun, Playful Card Styles */
+        .fun-card {
+            background: linear-gradient(145deg, #ffffff, #fff5f7);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy transition */
+        }
+        
+        .fun-card:hover {
+            transform: translateY(-10px) rotate(1deg);
+            box-shadow: 0 20px 40px -5px rgba(179, 105, 122, 0.2);
+            border-color: #fce7ef;
         }
 
-        /* Dark gradient for text readability on images */
+        /* Image Overlay Gradient */
         .img-overlay {
-            background: linear-gradient(to top, rgba(82, 46, 54, 0.7) 0%, rgba(82, 46, 54, 0.1) 60%, transparent 100%);
+            background: linear-gradient(to top, rgba(94, 49, 60, 0.85) 0%, rgba(94, 49, 60, 0.1) 60%, transparent 100%);
         }
 
         .reveal {
             opacity: 0;
             transform: translateY(30px);
-            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+            transition: all 0.8s ease-out;
         }
         .reveal.active {
             opacity: 1;
@@ -115,143 +127,174 @@
 </head>
 <body class="bg-dusty-50 text-dusty-900 antialiased selection:bg-dusty-200 selection:text-dusty-900 bg-paper">
 
-    <!-- Navbar -->
-    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-24">
-                <!-- Brand -->
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 flex items-center justify-center border border-dusty-100 rounded-full bg-white/60 text-dusty-500 shadow-sm">
+    <!-- Modern Floating Navbar -->
+    <nav class="fixed w-full z-50 top-0 pt-4 px-4 transition-all duration-300">
+        <div class="max-w-7xl mx-auto">
+            <div class="glass-nav rounded-full px-6 md:px-8 py-3 flex justify-between items-center">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3 cursor-pointer group">
+                    <div class="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-dusty-100 to-white rounded-full shadow-inner text-dusty-500 group-hover:rotate-12 transition-transform duration-300">
                         <i data-lucide="flower-2" class="w-6 h-6"></i>
                     </div>
                     <div class="flex flex-col">
                         <span class="font-script text-3xl text-dusty-900 leading-none mt-1">Magic Flowers</span>
-                        <span class="text-[10px] text-dusty-500 font-bold uppercase tracking-[0.2em] font-sans">Alexandria</span>
                     </div>
                 </div>
 
                 <!-- Desktop Links -->
-                <div class="hidden md:flex items-center gap-10">
-                    <a href="#home" class="text-sm font-bold text-dusty-700 hover:text-dusty-500 transition tracking-wider">الرئيسية</a>
-                    <a href="#services" class="text-sm font-bold text-dusty-700 hover:text-dusty-500 transition tracking-wider">خدماتنا</a>
-                    <a href="#collection" class="text-sm font-bold text-dusty-700 hover:text-dusty-500 transition tracking-wider">المجموعات</a>
-                    <a href="#contact" class="text-sm font-bold text-dusty-700 hover:text-dusty-500 transition tracking-wider">الموقع</a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#home" class="text-sm font-bold text-dusty-700 hover:text-dusty-500 transition relative group">
+                        الرئيسية
+                        <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-dusty-400 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#services" class="text-sm font-bold text-dusty-700 hover:text-dusty-500 transition relative group">
+                        خدماتنا
+                        <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-dusty-400 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#collection" class="text-sm font-bold text-dusty-700 hover:text-dusty-500 transition relative group">
+                        المجموعات
+                        <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-dusty-400 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#contact" class="text-sm font-bold text-dusty-700 hover:text-dusty-500 transition relative group">
+                        الموقع
+                        <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-dusty-400 transition-all group-hover:w-full"></span>
+                    </a>
                 </div>
 
-                <!-- CTA -->
-                <a href="https://wa.me/201099760278" target="_blank" class="hidden md:flex items-center gap-2 bg-dusty-500 text-white px-8 py-3 rounded-full font-bold hover:bg-dusty-600 transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                    <span>تواصل معنا</span>
-                </a>
-
-                <!-- Mobile Button -->
-                <button id="mobile-menu-btn" class="md:hidden p-2 text-dusty-800">
-                    <i data-lucide="menu" class="h-7 w-7"></i>
-                </button>
+                <!-- CTA Button -->
+                <div class="flex items-center gap-4">
+                    <a href="https://wa.me/201099760278" target="_blank" class="hidden md:flex items-center gap-2 bg-dusty-500 text-white px-6 py-2.5 rounded-full font-bold hover:bg-dusty-600 transition-all shadow-lg hover:shadow-dusty-300/50 transform hover:scale-105 active:scale-95">
+                        <span>تواصل معنا</span>
+                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    </a>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" class="md:hidden text-dusty-800 p-2 rounded-full hover:bg-dusty-100 transition">
+                        <i data-lucide="menu" class="w-7 h-7"></i>
+                    </button>
+                </div>
             </div>
         </div>
 
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-md border-b border-dusty-100 shadow-xl py-6 flex flex-col text-center z-40">
-            <a href="#home" class="py-3 font-bold text-dusty-700 hover:bg-dusty-50">الرئيسية</a>
-            <a href="#services" class="py-3 font-bold text-dusty-700 hover:bg-dusty-50">خدماتنا</a>
-            <a href="#collection" class="py-3 font-bold text-dusty-700 hover:bg-dusty-50">المجموعات</a>
-            <a href="#contact" class="py-3 font-bold text-dusty-700 hover:bg-dusty-50">الموقع</a>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden absolute top-24 left-4 right-4 bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white p-6 flex flex-col text-center z-50 transform origin-top transition-all">
+            <a href="#home" class="py-3 font-bold text-dusty-700 border-b border-dusty-50">الرئيسية</a>
+            <a href="#services" class="py-3 font-bold text-dusty-700 border-b border-dusty-50">خدماتنا</a>
+            <a href="#collection" class="py-3 font-bold text-dusty-700 border-b border-dusty-50">المجموعات</a>
+            <a href="#contact" class="py-3 font-bold text-dusty-700">الموقع</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header id="home" class="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+    <header id="home" class="relative h-screen min-h-[650px] flex items-center justify-center overflow-hidden">
         <!-- Background Image -->
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1457089328109-e5d9bd499191?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover" alt="Calm Dusty Pink Flowers">
-            <!-- Elegant Dark Overlay -->
-            <div class="absolute inset-0 bg-stone-900/40 mix-blend-multiply"></div>
-            <!-- Soft Gradient Fade -->
-            <div class="absolute inset-0 bg-gradient-to-t from-dusty-50 via-transparent to-transparent"></div>
+            <!-- Overlay -->
+            <div class="absolute inset-0 bg-stone-900/30 mix-blend-multiply"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-dusty-50 via-transparent to-black/10"></div>
         </div>
 
+        <!-- Floating Decorative Blobs -->
+        <div class="absolute top-1/4 left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl animate-blob"></div>
+        <div class="absolute bottom-1/4 right-10 w-40 h-40 bg-dusty-300/20 rounded-full blur-2xl animate-blob animation-delay-2000"></div>
+
         <div class="relative z-10 container mx-auto px-6 text-center pt-20">
-            <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-5 py-2 rounded-full border border-white/20 shadow-lg mb-8 animate-fade-in">
-                <span class="w-2 h-2 rounded-full bg-dusty-300 animate-pulse"></span>
-                <span class="text-xs font-bold text-white tracking-wide uppercase">مفتوح 24 ساعة - برج العرب</span>
+            <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-6 py-2 rounded-full border border-white/40 shadow-lg mb-8 animate-fade-in hover:bg-white/30 transition cursor-default">
+                <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                <span class="text-xs font-bold text-white tracking-widest uppercase shadow-sm">مفتوح 24 ساعة - برج العرب</span>
             </div>
 
-            <h1 class="text-6xl md:text-9xl text-white mb-6 drop-shadow-2xl font-script animate-fade-in tracking-wide" style="text-shadow: 2px 4px 8px rgba(0,0,0,0.4); animation-delay: 0.2s;">
+            <h1 class="text-7xl md:text-9xl text-white mb-6 drop-shadow-lg font-script animate-fade-in" style="text-shadow: 0 4px 15px rgba(0,0,0,0.2); animation-delay: 0.2s;">
                 Magic Flowers
             </h1>
             
-            <p class="text-lg md:text-2xl text-dusty-100 mb-12 max-w-xl mx-auto font-serif italic leading-relaxed animate-fade-in drop-shadow-lg font-light" style="animation-delay: 0.4s;">
+            <p class="text-xl md:text-2xl text-dusty-50 mb-12 max-w-xl mx-auto font-serif italic leading-relaxed animate-fade-in font-light drop-shadow-md" style="animation-delay: 0.4s;">
                 "حيث تلتقي الأناقة بالبساطة. نصنع من الزهور ذكريات هادئة لا تُنسى."
             </p>
 
             <div class="flex flex-col sm:flex-row gap-5 justify-center items-center animate-fade-in" style="animation-delay: 0.6s;">
-                <a href="#collection" class="px-10 py-4 bg-dusty-500 text-white rounded-full font-bold shadow-lg hover:bg-dusty-600 transition-all border border-transparent hover:shadow-dusty-500/30 hover:-translate-y-1">
-                    تصفح المجموعات
+                <a href="#collection" class="group px-10 py-4 bg-dusty-500 text-white rounded-full font-bold shadow-xl hover:bg-dusty-600 transition-all border-2 border-transparent hover:scale-105">
+                    <span class="flex items-center gap-2">
+                        تصفح المجموعات
+                        <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
+                    </span>
                 </a>
-                <a href="https://wa.me/201099760278" class="px-10 py-4 bg-white/10 backdrop-blur-md text-white border border-white/40 rounded-full font-bold shadow-md hover:bg-white hover:text-dusty-900 transition-all hover:-translate-y-1">
+                <a href="https://wa.me/201099760278" class="px-10 py-4 bg-white/10 backdrop-blur-md text-white border-2 border-white/50 rounded-full font-bold shadow-lg hover:bg-white hover:text-dusty-900 transition-all hover:scale-105">
                     اطلب عبر واتساب
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- Services Section -->
-    <section id="services" class="py-24 relative overflow-hidden">
-        <!-- Background Decor -->
-        <div class="absolute inset-0 bg-gradient-to-b from-dusty-50 to-white"></div>
-        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-dusty-200/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-        <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-dusty-200/20 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3 pointer-events-none"></div>
+    <!-- Fun Services Section -->
+    <section id="services" class="py-24 relative overflow-hidden bg-dusty-50">
+        <!-- Abstract Background Shapes -->
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-white rounded-full blur-[100px] opacity-60 pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-dusty-200 rounded-full blur-[120px] opacity-40 pointer-events-none translate-y-1/2 -translate-x-1/3"></div>
 
         <div class="container mx-auto px-6 relative z-10">
-            <div class="text-center mb-16 reveal">
-                <span class="text-dusty-500 font-bold tracking-widest text-xs uppercase">خدماتنا</span>
-                <h2 class="font-serif text-4xl text-dusty-900 font-bold mt-2">لمسات فنية متكاملة</h2>
-                <div class="w-16 h-0.5 bg-dusty-300 mx-auto mt-6"></div>
+            <div class="text-center mb-20 reveal">
+                <span class="bg-white px-4 py-1 rounded-full text-dusty-500 font-bold tracking-widest text-xs uppercase shadow-sm border border-dusty-100">خدماتنا</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-dusty-900 font-bold mt-4">لمسات فنية متكاملة</h2>
+                <div class="w-24 h-1.5 bg-dusty-200 mx-auto mt-6 rounded-full"></div>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Service 1 -->
-                <div class="glass-card rounded-2xl p-8 text-center hover:bg-white hover:shadow-xl transition-all duration-500 reveal group">
-                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6 text-dusty-500 shadow-sm group-hover:scale-110 transition duration-500">
-                        <i data-lucide="trees" class="w-8 h-8"></i>
+                <div class="fun-card rounded-[2rem] p-8 text-center reveal relative overflow-hidden group">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-dusty-100 rounded-full blur-xl group-hover:bg-dusty-200 transition-colors"></div>
+                    <div class="relative z-10">
+                        <div class="w-18 h-18 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 text-dusty-500 shadow-md group-hover:scale-110 group-hover:rotate-3 transition duration-500 border border-dusty-50">
+                            <i data-lucide="trees" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-dusty-900 mb-3">لاند سكيب</h3>
+                        <p class="text-dusty-600 text-sm leading-relaxed">تنسيق حدائق منزلية وعامة بتصاميم هادئة ومريحة للنفس.</p>
                     </div>
-                    <h3 class="text-lg font-bold text-dusty-900 mb-3">لاند سكيب</h3>
-                    <p class="text-dusty-600 text-sm leading-relaxed">تنسيق حدائق منزلية وعامة بتصاميم هادئة ومريحة للنفس.</p>
                 </div>
 
                 <!-- Service 2 -->
-                <div class="glass-card rounded-2xl p-8 text-center hover:bg-white hover:shadow-xl transition-all duration-500 reveal group" style="transition-delay: 100ms;">
-                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6 text-dusty-500 shadow-sm group-hover:scale-110 transition duration-500">
-                        <i data-lucide="car" class="w-8 h-8"></i>
+                <div class="fun-card rounded-[2rem] p-8 text-center reveal relative overflow-hidden group" style="transition-delay: 100ms;">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-dusty-100 rounded-full blur-xl group-hover:bg-dusty-200 transition-colors"></div>
+                    <div class="relative z-10">
+                        <div class="w-18 h-18 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 text-dusty-500 shadow-md group-hover:scale-110 group-hover:-rotate-3 transition duration-500 border border-dusty-50">
+                            <i data-lucide="car" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-dusty-900 mb-3">تزيين سيارات</h3>
+                        <p class="text-dusty-600 text-sm leading-relaxed">تصاميم زفاف راقية للسيارات والكوش تناسب ذوقكم الرفيع.</p>
                     </div>
-                    <h3 class="text-lg font-bold text-dusty-900 mb-3">تزيين سيارات</h3>
-                    <p class="text-dusty-600 text-sm leading-relaxed">تصاميم زفاف راقية للسيارات والكوش تناسب ذوقكم الرفيع.</p>
                 </div>
 
                 <!-- Service 3 -->
-                <div class="glass-card rounded-2xl p-8 text-center hover:bg-white hover:shadow-xl transition-all duration-500 reveal group" style="transition-delay: 200ms;">
-                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6 text-dusty-500 shadow-sm group-hover:scale-110 transition duration-500">
-                        <i data-lucide="flower" class="w-8 h-8"></i>
+                <div class="fun-card rounded-[2rem] p-8 text-center reveal relative overflow-hidden group" style="transition-delay: 200ms;">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-dusty-100 rounded-full blur-xl group-hover:bg-dusty-200 transition-colors"></div>
+                    <div class="relative z-10">
+                        <div class="w-18 h-18 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 text-dusty-500 shadow-md group-hover:scale-110 group-hover:rotate-3 transition duration-500 border border-dusty-50">
+                            <i data-lucide="flower" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-dusty-900 mb-3">زهور ونباتات</h3>
+                        <p class="text-dusty-600 text-sm leading-relaxed">باقات طبيعية، زهور مجففة، ونباتات ظل داخلية بجميع الأنواع.</p>
                     </div>
-                    <h3 class="text-lg font-bold text-dusty-900 mb-3">زهور ونباتات</h3>
-                    <p class="text-dusty-600 text-sm leading-relaxed">باقات طبيعية، زهور مجففة، ونباتات ظل داخلية بجميع الأنواع.</p>
                 </div>
 
                 <!-- Service 4 -->
-                <div class="glass-card rounded-2xl p-8 text-center hover:bg-white hover:shadow-xl transition-all duration-500 reveal group" style="transition-delay: 300ms;">
-                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6 text-dusty-500 shadow-sm group-hover:scale-110 transition duration-500">
-                        <i data-lucide="gift" class="w-8 h-8"></i>
+                <div class="fun-card rounded-[2rem] p-8 text-center reveal relative overflow-hidden group" style="transition-delay: 300ms;">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-dusty-100 rounded-full blur-xl group-hover:bg-dusty-200 transition-colors"></div>
+                    <div class="relative z-10">
+                        <div class="w-18 h-18 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 text-dusty-500 shadow-md group-hover:scale-110 group-hover:-rotate-3 transition duration-500 border border-dusty-50">
+                            <i data-lucide="gift" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-dusty-900 mb-3">هدايا وتغليف</h3>
+                        <p class="text-dusty-600 text-sm leading-relaxed">بوكسات هدايا وشوكولاتة بتغليف أنيق ومميز.</p>
                     </div>
-                    <h3 class="text-lg font-bold text-dusty-900 mb-3">هدايا وتغليف</h3>
-                    <p class="text-dusty-600 text-sm leading-relaxed">بوكسات هدايا وشوكولاتة بتغليف أنيق ومميز.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Collection Grid -->
-    <section id="collection" class="py-24 relative">
-        <div class="absolute inset-0 bg-white"></div>
+    <section id="collection" class="py-24 relative bg-white">
         <div class="container mx-auto px-6 relative z-10">
             <div class="text-center mb-16 reveal">
                 <h2 class="font-serif text-4xl font-bold text-dusty-900 mb-4">
@@ -262,42 +305,48 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- 1. Fresh Flowers -->
-                <div class="group relative h-[450px] rounded-3xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-700 reveal">
-                    <img src="https://images.unsplash.com/photo-1562690868-60bbe7293e94?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Bouquet">
-                    <div class="absolute inset-0 img-overlay opacity-80 group-hover:opacity-100 transition duration-500"></div>
+                <div class="group relative h-[420px] rounded-[2.5rem] overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-dusty-200/50 transition-all duration-500 reveal hover:-translate-y-2">
+                    <img src="https://images.unsplash.com/photo-1562690868-60bbe7293e94?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Bouquet">
+                    <div class="absolute inset-0 img-overlay opacity-80 group-hover:opacity-90 transition duration-500"></div>
+                    
+                    <!-- Floating Icon -->
+                    <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-[-10px] group-hover:translate-y-0">
+                        <i data-lucide="arrow-up-left" class="w-5 h-5"></i>
+                    </div>
+
                     <div class="absolute bottom-0 p-8 text-white w-full">
                         <h3 class="text-2xl font-bold mb-2 font-serif">باقات ورد</h3>
-                        <p class="text-dusty-100 text-sm font-light tracking-wide transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-500">تنسيق طبيعي وألوان هادئة</p>
+                        <p class="text-dusty-100 text-sm font-medium tracking-wide transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-500">تنسيق طبيعي وألوان هادئة</p>
                     </div>
                 </div>
 
                 <!-- 2. Gifts & Chocolate -->
-                <div class="group relative h-[450px] rounded-3xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-700 reveal" style="transition-delay: 100ms;">
-                    <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Gift Box">
-                    <div class="absolute inset-0 img-overlay opacity-80 group-hover:opacity-100 transition duration-500"></div>
+                <div class="group relative h-[420px] rounded-[2.5rem] overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-dusty-200/50 transition-all duration-500 reveal hover:-translate-y-2" style="transition-delay: 100ms;">
+                    <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Gift Box">
+                    <div class="absolute inset-0 img-overlay opacity-80 group-hover:opacity-90 transition duration-500"></div>
                     <div class="absolute bottom-0 p-8 text-white w-full">
                         <h3 class="text-2xl font-bold mb-2 font-serif">هدايا وشوكولاتة</h3>
-                        <p class="text-dusty-100 text-sm font-light tracking-wide transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-500">للمناسبات السعيدة</p>
+                        <p class="text-dusty-100 text-sm font-medium tracking-wide transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-500">للمناسبات السعيدة</p>
                     </div>
                 </div>
 
                 <!-- 3. Wedding -->
-                <div class="group relative h-[450px] rounded-3xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-700 reveal" style="transition-delay: 200ms;">
-                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Wedding">
-                    <div class="absolute inset-0 img-overlay opacity-80 group-hover:opacity-100 transition duration-500"></div>
+                <div class="group relative h-[420px] rounded-[2.5rem] overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-dusty-200/50 transition-all duration-500 reveal hover:-translate-y-2" style="transition-delay: 200ms;">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Wedding">
+                    <div class="absolute inset-0 img-overlay opacity-80 group-hover:opacity-90 transition duration-500"></div>
                     <div class="absolute bottom-0 p-8 text-white w-full">
                         <h3 class="text-2xl font-bold mb-2 font-serif">زفاف وخطوبة</h3>
-                        <p class="text-dusty-100 text-sm font-light tracking-wide transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-500">أناقة كلاسيكية</p>
+                        <p class="text-dusty-100 text-sm font-medium tracking-wide transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-500">أناقة كلاسيكية</p>
                     </div>
                 </div>
 
                 <!-- 4. Indoor Plants -->
-                <div class="group relative h-[450px] rounded-3xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-700 reveal" style="transition-delay: 300ms;">
-                    <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Indoor Plants">
-                    <div class="absolute inset-0 img-overlay opacity-80 group-hover:opacity-100 transition duration-500"></div>
+                <div class="group relative h-[420px] rounded-[2.5rem] overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-dusty-200/50 transition-all duration-500 reveal hover:-translate-y-2" style="transition-delay: 300ms;">
+                    <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Indoor Plants">
+                    <div class="absolute inset-0 img-overlay opacity-80 group-hover:opacity-90 transition duration-500"></div>
                     <div class="absolute bottom-0 p-8 text-white w-full">
                         <h3 class="text-2xl font-bold mb-2 font-serif">نباتات ظل</h3>
-                        <p class="text-dusty-100 text-sm font-light tracking-wide transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-500">طبيعة في منزلك</p>
+                        <p class="text-dusty-100 text-sm font-medium tracking-wide transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-500">طبيعة في منزلك</p>
                     </div>
                 </div>
             </div>
@@ -305,10 +354,7 @@
     </section>
 
     <!-- Social Media Hub -->
-    <section id="social" class="py-24 relative overflow-hidden">
-        <!-- Subtle texture background -->
-        <div class="absolute inset-0 bg-dusty-50/50 bg-paper"></div>
-        
+    <section id="social" class="py-24 relative overflow-hidden bg-dusty-50/50">
         <div class="container mx-auto px-6 relative z-10">
             <div class="flex flex-col md:flex-row items-center justify-between mb-16 reveal">
                 <div>
@@ -331,54 +377,54 @@
             <!-- Social Cards -->
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Instagram Card -->
-                <a href="https://www.instagram.com/magic.flower.store" target="_blank" class="glass-card bg-white rounded-3xl p-6 group hover:border-dusty-300 transition-all duration-300 reveal hover:shadow-xl">
+                <a href="https://www.instagram.com/magic.flower.store" target="_blank" class="fun-card rounded-[2rem] p-6 group reveal">
                     <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-amber-300 via-red-400 to-purple-500 p-[2px] shadow-sm">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-amber-300 via-red-400 to-purple-500 p-[2px] shadow-sm group-hover:animate-spin-slow">
                             <div class="w-full h-full bg-white rounded-full flex items-center justify-center">
                                 <i class="fab fa-instagram text-transparent bg-clip-text bg-gradient-to-tr from-amber-300 via-red-400 to-purple-500 text-lg"></i>
                             </div>
                         </div>
                         <div class="flex flex-col">
-                            <span class="font-bold text-base text-dusty-900">@magic.flower.store</span>
+                            <span class="font-bold text-base text-dusty-900 group-hover:text-dusty-600 transition">@magic.flower.store</span>
                             <span class="text-xs text-dusty-500 font-bold">Instagram</span>
                         </div>
                     </div>
-                    <div class="aspect-square rounded-2xl overflow-hidden bg-dusty-50 relative group">
-                        <img src="https://images.unsplash.com/photo-1507290439931-a861b5a38200?q=80&w=600&auto=format&fit=crop" class="object-cover w-full h-full group-hover:scale-105 transition duration-700" alt="Florist Holding Bouquet">
+                    <div class="aspect-square rounded-2xl overflow-hidden bg-dusty-50 relative">
+                        <img src="https://images.unsplash.com/photo-1507290439931-a861b5a38200?q=80&w=600&auto=format&fit=crop" class="object-cover w-full h-full group-hover:scale-110 transition duration-700" alt="Florist Holding Bouquet">
                     </div>
                 </a>
 
                 <!-- TikTok Card -->
-                <a href="https://www.tiktok.com/@dr_mahynazdarwish" target="_blank" class="glass-card bg-white rounded-3xl p-6 group hover:border-dusty-300 transition-all duration-300 reveal hover:shadow-xl" style="transition-delay: 100ms;">
+                <a href="https://www.tiktok.com/@dr_mahynazdarwish" target="_blank" class="fun-card rounded-[2rem] p-6 group reveal" style="transition-delay: 100ms;">
                     <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 rounded-full bg-black flex items-center justify-center text-white shadow-sm">
+                        <div class="w-12 h-12 rounded-full bg-black flex items-center justify-center text-white shadow-sm group-hover:animate-wiggle">
                             <i class="fab fa-tiktok text-lg"></i>
                         </div>
                         <div class="flex flex-col">
-                            <span class="font-bold text-base text-dusty-900">@dr_mahynazdarwish</span>
+                            <span class="font-bold text-base text-dusty-900 group-hover:text-dusty-600 transition">@dr_mahynazdarwish</span>
                             <span class="text-xs text-dusty-500 font-bold">TikTok</span>
                         </div>
                     </div>
                     <div class="aspect-square rounded-2xl overflow-hidden bg-dusty-50 relative group">
                         <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=600&auto=format&fit=crop" class="object-cover w-full h-full group-hover:scale-105 transition duration-700" alt="Floral Arrangement Video">
                          <div class="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/20 transition">
-                            <i data-lucide="play-circle" class="text-white w-16 h-16 drop-shadow-md"></i>
+                            <i data-lucide="play-circle" class="text-white w-16 h-16 drop-shadow-md group-hover:scale-110 transition"></i>
                         </div>
                     </div>
                 </a>
 
                 <!-- Facebook Card -->
-                <a href="https://www.facebook.com/CLICKitkat/" target="_blank" class="glass-card bg-white rounded-3xl p-6 group hover:border-dusty-300 transition-all duration-300 reveal hover:shadow-xl" style="transition-delay: 200ms;">
+                <a href="https://www.facebook.com/CLICKitkat/" target="_blank" class="fun-card rounded-[2rem] p-6 group reveal" style="transition-delay: 200ms;">
                     <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white shadow-sm">
+                        <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white shadow-sm group-hover:scale-110 transition">
                             <i class="fab fa-facebook-f text-lg"></i>
                         </div>
                         <div class="flex flex-col">
-                            <span class="font-bold text-base text-dusty-900">Magic Flower Store</span>
+                            <span class="font-bold text-base text-dusty-900 group-hover:text-dusty-600 transition">Magic Flower Store</span>
                             <span class="text-xs text-dusty-500 font-bold">Facebook</span>
                         </div>
                     </div>
-                    <div class="aspect-square rounded-2xl overflow-hidden bg-dusty-50 relative group">
+                    <div class="aspect-square rounded-2xl overflow-hidden bg-dusty-50 relative">
                         <img src="https://images.unsplash.com/photo-1591886960571-74d43a9d4166?q=80&w=600&auto=format&fit=crop" class="object-cover w-full h-full group-hover:scale-105 transition duration-700" alt="Facebook Post">
                     </div>
                 </a>
@@ -389,7 +435,7 @@
     <!-- Location Section -->
     <section id="contact" class="py-24 bg-white relative">
         <div class="container mx-auto px-6">
-            <div class="bg-dusty-50 rounded-[3rem] shadow-sm border border-dusty-100 overflow-hidden">
+            <div class="bg-dusty-50 rounded-[3rem] shadow-lg shadow-dusty-100/50 border border-dusty-100 overflow-hidden">
                 <div class="grid lg:grid-cols-2">
                     <!-- Text Side -->
                     <div class="p-12 lg:p-20 flex flex-col justify-center">
@@ -405,7 +451,7 @@
                         
                         <div class="space-y-8">
                             <div class="flex gap-5 group">
-                                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-dusty-400 shadow-sm group-hover:text-dusty-600 transition">
+                                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-dusty-400 shadow-sm group-hover:text-dusty-600 transition group-hover:scale-110">
                                     <i data-lucide="map-pin" class="w-6 h-6"></i>
                                 </div>
                                 <div>
@@ -414,7 +460,7 @@
                                 </div>
                             </div>
                             <div class="flex gap-5 group">
-                                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-dusty-400 shadow-sm group-hover:text-dusty-600 transition">
+                                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-dusty-400 shadow-sm group-hover:text-dusty-600 transition group-hover:scale-110">
                                     <i data-lucide="phone" class="w-6 h-6"></i>
                                 </div>
                                 <div>
@@ -425,7 +471,7 @@
                         </div>
 
                         <div class="mt-12">
-                            <a href="https://maps.app.goo.gl/9UbMaTZmkQbNMPop6" target="_blank" class="inline-flex items-center justify-center w-full bg-stone-900 text-white py-4 rounded-xl font-bold hover:bg-stone-800 transition gap-3 shadow-lg">
+                            <a href="https://maps.app.goo.gl/9UbMaTZmkQbNMPop6" target="_blank" class="inline-flex items-center justify-center w-full bg-stone-900 text-white py-4 rounded-xl font-bold hover:bg-stone-800 transition gap-3 shadow-lg hover:-translate-y-1">
                                 <i data-lucide="navigation" class="w-5 h-5"></i>
                                 الموقع على الخريطة
                             </a>
@@ -441,11 +487,8 @@
         </div>
     </section>
 
-    <!-- Footer (Dark & Elegant) -->
+    <!-- Footer -->
     <footer class="bg-stone-900 text-white pt-20 pb-10 rounded-t-[3rem] mt-24 border-t-4 border-dusty-500 relative overflow-hidden">
-        <!-- Background Glow -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-dusty-500/10 rounded-full blur-[100px] pointer-events-none"></div>
-
         <div class="container mx-auto px-6 relative z-10">
             <div class="grid md:grid-cols-3 gap-12 text-center md:text-right mb-16">
                 <!-- Branding -->
@@ -460,13 +503,13 @@
                         وجهتكم الأولى للزهور الطبيعية والهدايا الفاخرة في الإسكندرية. نهتم بأدق التفاصيل لنسعدكم في كل مناسباتكم.
                     </p>
                     <div class="flex gap-4">
-                        <a href="https://www.facebook.com/CLICKitkat/" target="_blank" class="w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-blue-600 transition text-white">
+                        <a href="https://www.facebook.com/CLICKitkat/" target="_blank" class="w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-blue-600 transition text-white hover:scale-110">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="https://www.instagram.com/magic.flower.store" target="_blank" class="w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-pink-600 transition text-white">
+                        <a href="https://www.instagram.com/magic.flower.store" target="_blank" class="w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-pink-600 transition text-white hover:scale-110">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="https://www.tiktok.com/@dr_mahynazdarwish" target="_blank" class="w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-white hover:text-black transition text-white">
+                        <a href="https://www.tiktok.com/@dr_mahynazdarwish" target="_blank" class="w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-white hover:text-black transition text-white hover:scale-110">
                             <i class="fab fa-tiktok"></i>
                         </a>
                     </div>
@@ -507,14 +550,14 @@
                 <p>&copy; 2025 Magic Flowers. All rights reserved.</p>
                 <div class="flex gap-2 items-center">
                     <span>صُنع بحب</span>
-                    <i data-lucide="heart" class="w-4 h-4 text-dusty-500 fill-current"></i>
+                    <i data-lucide="heart" class="w-4 h-4 text-dusty-500 fill-current animate-pulse"></i>
                 </div>
             </div>
         </div>
     </footer>
 
     <!-- Floating WhatsApp -->
-    <a href="https://wa.me/201099760278" target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-[#20ba5a] transition-all z-50 hover:scale-110">
+    <a href="https://wa.me/201099760278" target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:bg-[#20ba5a] transition-all z-50 hover:scale-110 border-4 border-white">
         <i class="fab fa-whatsapp text-3xl"></i>
     </a>
 
